@@ -30,6 +30,6 @@ pub fn build(b: *std.Build) void {
         .root_module = app_module,
     });
 
-    // 4. Install the generated librun.a into zig-out/lib/
+    // 5. Install the generated librun.a into zig-out/lib/
     b.installArtifact(lib);
 }
