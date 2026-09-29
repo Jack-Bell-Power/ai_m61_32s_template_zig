@@ -1,4 +1,8 @@
+# Zig build cache
 .zig-cache/
+
+# Zig build output
 zig-out/
-*.o
+
+# Bouffalo SDK build directory
 build/

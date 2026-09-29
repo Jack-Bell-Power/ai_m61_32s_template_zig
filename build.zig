@@ -1,7 +1,7 @@
 const std = @import("std");
 
 pub fn build(b: *std.Build) void {
-    // 1. 设置 RISC-V 交叉编译目标 (BL618: RV32IMAFC)
+    // 1. Configure the RISC-V cross-compilation target (BL618: RV32IMAFC)
     const target = b.resolveTargetQuery(.{
         .cpu_arch = .riscv32,
         .os_tag = .freestanding,
@@ -16,20 +16,20 @@ pub fn build(b: *std.Build) void {
         .preferred_optimize_mode = .ReleaseSmall,
     });
 
-    // 2. 在 0.16 中，需要先用 b.createModule 创建模块
+    // 2. In Zig 0.16, create the module first
     const app_module = b.createModule(.{
         .root_source_file = b.path("src/run.zig"),
         .target = target,
         .optimize = optimize,
     });
 
-    // 3. 0.16 使用 b.addLibrary，并指定 linkage 为 .static
+    // 3. In Zig 0.16, use b.addLibrary with static linkage
     const lib = b.addLibrary(.{
         .name = "run",
         .linkage = .static,
         .root_module = app_module,
     });
 
-    // 4. 将生成的 libapp.a 安装到 zig-out/lib/
+    // 4. Install the generated librun.a into zig-out/lib/
     b.installArtifact(lib);
 }
